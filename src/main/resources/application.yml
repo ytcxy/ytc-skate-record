@@ -1,0 +1,28 @@
+server:
+  port: 9999
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3307/ytc-skate?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+#  redis:
+#    port: 6379
+#    host: 127.0.0.1
+#    password: 123456
+#    database: 0
+logging:
+  level:
+    com.ytc: debug
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted # ????????????(since 3.3.0,????????????2)
+      logic-delete-value: 1 # ??????(??? 1)
+      logic-not-delete-value: 0 # ??????(??? 0)
+
+
+
