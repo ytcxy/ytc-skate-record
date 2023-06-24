@@ -49,6 +49,7 @@ public class TrickIdController {
         trickId.setTrick(userTrick.getTrickName());
         trickId.setUserId(userTrick.getUserId());
 
+
         boolean save = trickIdService.save(trickId);
         return CommonResp.success(save);
     }
