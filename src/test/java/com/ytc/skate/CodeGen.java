@@ -12,7 +12,7 @@ public class CodeGen {
         String username = "root";
         String password = "123456";
         String moduleName = "sys";
-        String mapperLocation = "/Users/ytccc/code/my/ytc-skate/ytc-skate-record/ytc-skate-record/src/main/resources/mapper/" + moduleName;
+        String mapperLocation = "/Users/ytccc/code/my/ytc-skate/ytc-skate-record/src/main/resources/mapper/" + moduleName;
         String tables = "x_Trick_Detail,x_User_Trick";
 
 
@@ -21,7 +21,7 @@ public class CodeGen {
                 builder.author("baomidou") // 设置作者
 //                    .enableSwagger() // 开启 swagger 模式
 //                    .fileOverride() // 覆盖已生成文件
-                    .outputDir("/Users/ytccc/code/my/ytc-skate/ytc-skate-record/ytc-skate-record/src/main/java"); // 指定输出目录
+                    .outputDir("/Users/ytccc/code/my/ytc-skate/ytc-skate-record/src/main/java"); // 指定输出目录
             })
             .packageConfig(builder -> {
                 builder.parent("com.ytc") // 设置父包名
