@@ -13,7 +13,7 @@ public class CodeGen {
         String password = "123456";
         String moduleName = "sys";
         String mapperLocation = "/Users/ytccc/code/my/ytc-skate/ytc-skate-record/ytc-skate-record/src/main/resources/mapper/" + moduleName;
-        String tables = "x_Trick,x_Trick_Id";
+        String tables = "x_Trick_Detail,x_User_Trick";
 
 
         FastAutoGenerator.create(url, username, password)
@@ -30,8 +30,11 @@ public class CodeGen {
             })
             .strategyConfig(builder -> {
                 builder.addInclude(tables) // 设置需要生成的表名
-                    .addTablePrefix("x_"); // 设置过滤表前缀
-            })
+                    .addTablePrefix("x_")
+                        ; // 设置过滤表前缀
+            }).strategyConfig(builder -> {
+                builder.controllerBuilder().get();
+                })
             .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
             .execute();
     }
