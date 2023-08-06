@@ -2,22 +2,23 @@ package com.ytc.skate.sys.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.ytc.skate.common.CommonResp;
 import com.ytc.skate.model.req.AddTrickInfoReq;
 import com.ytc.skate.model.req.TrickInfoReq;
 import com.ytc.skate.model.resp.TrickInfoResp;
 import com.ytc.skate.model.vo.TrickInfoVO;
-import com.ytc.skate.sys.entity.Trick;
-import com.ytc.skate.sys.service.ITrickService;
+import com.ytc.skate.sys.entity.TrickDetail;
+import com.ytc.skate.sys.service.ITrickDetailService;
 import com.ytc.skate.util.DateTimeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -29,23 +30,21 @@ import java.util.stream.Collectors;
  * </p>
  *
  * @author baomidou
- * @since 2023-06-23
+ * @since 2023-08-06
  */
 @Slf4j
 @RestController
-@RequestMapping("/trick")
-public class TrickController {
-
-
+@RequestMapping("/trickDetail")
+public class TrickDetailController {
 
     @Autowired
-    private ITrickService trickService;
+    private ITrickDetailService trickService;
 
 
     @PostMapping("/add")
     public CommonResp<Boolean> addTrickInfo(@RequestBody AddTrickInfoReq req) {
         try {
-            Trick trick = new Trick();
+            TrickDetail trick = new TrickDetail();
             trick.setUserId(req.getUserId());
             trick.setName(req.getName());
             trick.setTrickName(req.getTrickName());
@@ -73,16 +72,16 @@ public class TrickController {
             trickInfoReq.setEndTime(String.valueOf(DateTimeUtils.dateTime2MilliSec(LocalDateTime.now())));
         }
 
-        LambdaQueryWrapper<Trick> query = new LambdaQueryWrapper<>();
-        query.eq(Trick::getUserId, trickInfoReq.getUserId());
-        query.ge(Trick::getAddTime, DateTimeUtils.long2LocalDateTime(Long.valueOf(trickInfoReq.getBeginTime())));
-        query.le(Trick::getAddTime, DateTimeUtils.long2LocalDateTime(Long.valueOf(trickInfoReq.getEndTime())));
-        List<Trick> tricks = trickService.list(query);
+        LambdaQueryWrapper<TrickDetail> query = new LambdaQueryWrapper<>();
+        query.eq(TrickDetail::getUserId, trickInfoReq.getUserId());
+        query.ge(TrickDetail::getAddTime, DateTimeUtils.long2LocalDateTime(Long.valueOf(trickInfoReq.getBeginTime())));
+        query.le(TrickDetail::getAddTime, DateTimeUtils.long2LocalDateTime(Long.valueOf(trickInfoReq.getEndTime())));
+        List<TrickDetail> tricks = trickService.list(query);
 
-        Map<Integer, List<Trick>> id2Trick= tricks.stream().collect(Collectors.groupingBy(Trick::getTrickId));
-        List<Trick> result = Lists.newArrayList();
-        for (Map.Entry<Integer, List<Trick>> entry : id2Trick.entrySet()) {
-            result.add(entry.getValue().stream().reduce(TrickController::mergeTrick).get());
+        Map<Integer, List<TrickDetail>> id2Trick= tricks.stream().collect(Collectors.groupingBy(TrickDetail::getTrickId));
+        List<TrickDetail> result = Lists.newArrayList();
+        for (Map.Entry<Integer, List<TrickDetail>> entry : id2Trick.entrySet()) {
+            result.add(entry.getValue().stream().reduce(TrickDetailController::mergeTrick).get());
         }
         result = result.stream().sorted((o1, o2) -> {
             return o2.getCount().intValue() - o1.getCount().intValue();
@@ -100,7 +99,7 @@ public class TrickController {
         return CommonResp.success(resp);
     }
 
-    private static Trick mergeTrick(Trick trick, Trick trick1) {
+    private static TrickDetail mergeTrick(TrickDetail trick, TrickDetail trick1) {
         trick.setCount(trick.getCount() + trick1.getCount());
         return trick;
     }

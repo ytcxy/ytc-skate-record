@@ -24,7 +24,7 @@ public class CodeGen {
                     .outputDir("/Users/ytccc/code/my/ytc-skate/ytc-skate-record/src/main/java"); // 指定输出目录
             })
             .packageConfig(builder -> {
-                builder.parent("com.ytc") // 设置父包名
+                builder.parent("com.ytc.skate") // 设置父包名
                     .moduleName(moduleName) // 设置父包模块名
                     .pathInfo(Collections.singletonMap(OutputFile.xml, mapperLocation)); // 设置mapperXml生成路径
             })
@@ -32,9 +32,7 @@ public class CodeGen {
                 builder.addInclude(tables) // 设置需要生成的表名
                     .addTablePrefix("x_")
                         ; // 设置过滤表前缀
-            }).strategyConfig(builder -> {
-                builder.controllerBuilder().get();
-                })
+            })
             .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
             .execute();
     }

@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ytc.skate.common.CommonResp;
 import com.ytc.skate.model.req.UserTrickIdReq;
 import com.ytc.skate.model.resp.TrickIdInfoResp;
-import com.ytc.skate.sys.entity.TrickId;
-import com.ytc.skate.sys.service.ITrickIdService;
+import com.ytc.skate.sys.entity.UserTrick;
+import com.ytc.skate.sys.service.IUserTrickService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,14 +19,15 @@ import java.util.Objects;
  * </p>
  *
  * @author baomidou
- * @since 2023-06-23
+ * @since 2023-08-06
  */
 @RestController
-@RequestMapping("/trickId")
-public class TrickIdController {
+@RequestMapping("/userTrick")
+public class UserTrickController {
+
 
     @Autowired
-    private ITrickIdService trickIdService;
+    private IUserTrickService trickIdService;
 
     @GetMapping("/info")
     public CommonResp<List<TrickIdInfoResp>> userInfo(@RequestParam(value = "userId") String userId) {
@@ -38,14 +40,14 @@ public class TrickIdController {
 
     @PostMapping("/add")
     public CommonResp<Object> addTrickIdInfo(@RequestBody UserTrickIdReq userTrick) {
-        LambdaQueryWrapper<TrickId> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(TrickId::getTrick, userTrick.getTrickName());
-        queryWrapper.eq(TrickId::getUserId, userTrick.getUserId());
-        TrickId one = trickIdService.getOne(queryWrapper);
+        LambdaQueryWrapper<UserTrick> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(UserTrick::getTrick, userTrick.getTrickName());
+        queryWrapper.eq(UserTrick::getUserId, userTrick.getUserId());
+        UserTrick one = trickIdService.getOne(queryWrapper);
         if (Objects.nonNull(one)) {
             return CommonResp.success();
         }
-        TrickId trickId = new TrickId();
+        UserTrick trickId = new UserTrick();
         trickId.setTrick(userTrick.getTrickName());
         trickId.setUserId(userTrick.getUserId());
 
@@ -53,6 +55,4 @@ public class TrickIdController {
         boolean save = trickIdService.save(trickId);
         return CommonResp.success(save);
     }
-
-
 }

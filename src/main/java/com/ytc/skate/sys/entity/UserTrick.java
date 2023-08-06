@@ -12,27 +12,19 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author baomidou
- * @since 2023-06-23
+ * @since 2023-08-06
  */
-@TableName("x_Trick")
-public class Trick implements Serializable {
+@TableName("x_User_Trick")
+public class UserTrick implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "Id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     private String userId;
 
-    private String name;
-
-
-
-    private String trickName;
-
-    private Integer trickId;
-
-    private Long count;
+    private String trick;
 
     /**
      * 创建时间
@@ -58,33 +50,12 @@ public class Trick implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    public String getName() {
-        return name;
+    public String getTrick() {
+        return trick;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getTrickName() {
-        return trickName;
-    }
-
-    public void setTrickName(String trickName) {
-        this.trickName = trickName;
-    }
-    public Integer getTrickId() {
-        return trickId;
-    }
-
-    public void setTrickId(Integer trickId) {
-        this.trickId = trickId;
-    }
-    public Long getCount() {
-        return count;
-    }
-
-    public void setCount(Long count) {
-        this.count = count;
+    public void setTrick(String trick) {
+        this.trick = trick;
     }
     public LocalDateTime getAddTime() {
         return addTime;
@@ -103,14 +74,11 @@ public class Trick implements Serializable {
 
     @Override
     public String toString() {
-        return "Trick{" +
+        return "UserTrick{" +
             "id=" + id +
             ", userId=" + userId +
-            ", name=" + name +
-            ", trickId=" + trickId +
-            ", count=" + count +
+            ", trick=" + trick +
             ", addTime=" + addTime +
-            ", trickName=" + trickName+
             ", updateTime=" + updateTime +
         "}";
     }

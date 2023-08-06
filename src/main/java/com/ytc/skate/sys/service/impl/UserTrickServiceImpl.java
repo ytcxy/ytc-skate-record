@@ -2,9 +2,9 @@ package com.ytc.skate.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ytc.skate.model.resp.TrickIdInfoResp;
-import com.ytc.skate.sys.entity.TrickId;
-import com.ytc.skate.sys.mapper.TrickIdMapper;
-import com.ytc.skate.sys.service.ITrickIdService;
+import com.ytc.skate.sys.entity.UserTrick;
+import com.ytc.skate.sys.mapper.UserTrickMapper;
+import com.ytc.skate.sys.service.IUserTrickService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +18,17 @@ import java.util.stream.Collectors;
  * </p>
  *
  * @author baomidou
- * @since 2023-06-23
+ * @since 2023-08-06
  */
 @Service
-public class TrickIdServiceImpl extends ServiceImpl<TrickIdMapper, TrickId> implements ITrickIdService {
-
+public class UserTrickServiceImpl extends ServiceImpl<UserTrickMapper, UserTrick> implements IUserTrickService {
     @Resource
-    private TrickIdMapper trickIdMapper;
+    private UserTrickMapper userTrickMapper;
     @Override
     public List<TrickIdInfoResp> info(String userId) {
-        LambdaQueryWrapper<TrickId> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(TrickId::getUserId, userId);
-        List<TrickId> trickIds = trickIdMapper.selectList(queryWrapper);
+        LambdaQueryWrapper<UserTrick> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(UserTrick::getUserId, userId);
+        List<UserTrick> trickIds = userTrickMapper.selectList(queryWrapper);
         return trickIds.stream().map(trick -> {
             TrickIdInfoResp trickInfo = new TrickIdInfoResp();
             trickInfo.setTrick(trick.getTrick());

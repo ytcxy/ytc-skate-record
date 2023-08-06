@@ -1,6 +1,6 @@
 package com.ytc.skate.sys.mapper;
 
-import com.ytc.skate.sys.entity.Trick;
+import com.ytc.skate.sys.entity.TrickDetail;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author baomidou
- * @since 2023-06-23
+ * @since 2023-08-06
  */
-public interface TrickMapper extends BaseMapper<Trick> {
+public interface TrickDetailMapper extends BaseMapper<TrickDetail> {
 
 }

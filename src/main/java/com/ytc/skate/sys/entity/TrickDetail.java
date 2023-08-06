@@ -12,19 +12,23 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author baomidou
- * @since 2023-06-23
+ * @since 2023-08-06
  */
-@TableName("x_Trick_Id")
-public class TrickId implements Serializable {
+@TableName("x_Trick_Detail")
+public class TrickDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "Id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     private String userId;
 
-    private String trick;
+    private String name;
+
+    private Integer trickId;
+
+    private Long count;
 
     /**
      * 创建时间
@@ -35,6 +39,8 @@ public class TrickId implements Serializable {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    private String trickName;
 
     public Integer getId() {
         return id;
@@ -50,12 +56,26 @@ public class TrickId implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    public String getTrick() {
-        return trick;
+    public String getName() {
+        return name;
     }
 
-    public void setTrick(String trick) {
-        this.trick = trick;
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Integer getTrickId() {
+        return trickId;
+    }
+
+    public void setTrickId(Integer trickId) {
+        this.trickId = trickId;
+    }
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
     }
     public LocalDateTime getAddTime() {
         return addTime;
@@ -71,15 +91,25 @@ public class TrickId implements Serializable {
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
+    public String getTrickName() {
+        return trickName;
+    }
+
+    public void setTrickName(String trickName) {
+        this.trickName = trickName;
+    }
 
     @Override
     public String toString() {
-        return "TrickId{" +
+        return "TrickDetail{" +
             "id=" + id +
             ", userId=" + userId +
-            ", trick=" + trick +
+            ", name=" + name +
+            ", trickId=" + trickId +
+            ", count=" + count +
             ", addTime=" + addTime +
             ", updateTime=" + updateTime +
+            ", trickName=" + trickName +
         "}";
     }
 }
