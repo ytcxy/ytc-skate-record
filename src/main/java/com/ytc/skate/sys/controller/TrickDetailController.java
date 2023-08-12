@@ -56,6 +56,7 @@ public class TrickDetailController {
             log.error("addTrickInfo fail", e);
         }
 
+
         return CommonResp.fail();
     }
 
