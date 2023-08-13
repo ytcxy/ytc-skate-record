@@ -1,5 +1,6 @@
 package com.ytc.skate.sys.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
 import com.ytc.skate.common.CommonResp;
@@ -64,6 +65,7 @@ public class TrickDetailController {
 
     @PostMapping("/info")
     public CommonResp<TrickInfoResp> getTrickInfo(@RequestBody TrickInfoReq trickInfoReq) {
+        log.info("getTrickInfo request", JSON.toJSON(trickInfoReq));
         if (!TrickInfoReq.valid(trickInfoReq)) {
             return CommonResp.paramError();
         }
@@ -79,9 +81,11 @@ public class TrickDetailController {
         query.le(TrickDetail::getAddTime, DateTimeUtils.long2LocalDateTime(Long.valueOf(trickInfoReq.getEndTime())));
         List<TrickDetail> tricks = trickService.list(query);
 
-        Map<Integer, List<TrickDetail>> id2Trick= tricks.stream().collect(Collectors.groupingBy(TrickDetail::getTrickId));
+
+
+        Map<String, List<TrickDetail>> id2Trick= tricks.stream().collect(Collectors.groupingBy(TrickDetail::getTrickName));
         List<TrickDetail> result = Lists.newArrayList();
-        for (Map.Entry<Integer, List<TrickDetail>> entry : id2Trick.entrySet()) {
+        for (Map.Entry<String, List<TrickDetail>> entry : id2Trick.entrySet()) {
             result.add(entry.getValue().stream().reduce(TrickDetailController::mergeTrick).get());
         }
         result = result.stream().sorted((o1, o2) -> {
