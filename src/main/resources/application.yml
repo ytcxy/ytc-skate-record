@@ -1,5 +1,9 @@
 server:
   port: 9999
+  ssl:
+    key-store: classpath:ytcskate.top.jks
+    key-store-password: ovg0bfc5
+    key-store-type: JKS
 
 spring:
   datasource:
